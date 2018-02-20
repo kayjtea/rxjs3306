@@ -6,22 +6,49 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Expected output
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+do: a0
+result: a0
+do: a1
+result: a1
+do: b1
+result: b1
+do: c1
+result: c1
 
-## Build
+## Actual (bad) output
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+do: a0
+result: a0
+do: b0
+do: a1
+result: a1
+do: c0
+do: b1
+result: b1
+do: c1
+result: c1
 
-## Running unit tests
+## Bad import
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The bad output arises from mixing approaches to importing RxJS. It appears you can import the entire big RxJS package
+or import piecemeal but don't mix the two.
 
-## Running end-to-end tests
+### Good
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
-## Further help
+### Bad
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+import {Observable} from 'rxjs';
+import {Subject} from 'rxjs/Subject';
+
+But note importing Observable from 'rxjs/Rx' causes the problem not to manifest. This works to output the "good" output for some reason:
+
+import {Observable} from 'rxjs/Rx';
+import {Subject} from 'rxjs/Subject';
+
+Even though 'rxjs' and 'rxjs/Rx' should be equivalent due to the rxjs package.json, having a "main" entry.
+
