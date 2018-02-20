@@ -52,5 +52,5 @@ But note importing Observable from 'rxjs/Rx' causes the problem not to manifest.
     import {Observable} from 'rxjs/Rx';
     import {Subject} from 'rxjs/Subject';
 
-Even though 'rxjs' and 'rxjs/Rx' should be equivalent due to the rxjs package.json, having a "main" entry.
+Even though 'rxjs' and 'rxjs/Rx' should be equivalent due to the rxjs package.json having a "main" entry.
 
